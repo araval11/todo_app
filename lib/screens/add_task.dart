@@ -2,12 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_assignment_getx/controllers/task_controller.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddTaskScreen extends StatefulWidget {
+  @override
+  State<AddTaskScreen> createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
   final TaskController controller = Get.put(TaskController());
+
   final textcontroller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    textcontroller.addListener(_printLatestValue);
+  }
+
+  @override
+  void dispose() {
+    textcontroller.dispose();
+    super.dispose();
+  }
+
+  void _printLatestValue() {}
   @override
   Widget build(BuildContext context) {
-    String? addtask;
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -24,6 +43,7 @@ class AddTaskScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500),
             ),
             TextField(
+              textInputAction: TextInputAction.go,
               controller: textcontroller,
               autofocus: true,
               textAlign: TextAlign.center,
